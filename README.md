@@ -13,7 +13,7 @@ Baaj Arora 486040 baajarora
 
 10 - users can place counters on the connect 4 board correctly
 
-10 - game operates correctly with swicthing player between rounds
+10 - game operates correctly with swicthing between player and guest player between rounds
 
 10 - computer can play a counter and operates correctly
 
