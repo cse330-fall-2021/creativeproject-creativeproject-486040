@@ -1,0 +1,16 @@
+.slot {
+    padding: .5rem;
+    margin: .05rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    border: 1px solid #ffffff;
+    background-color: lightblue;
+} 
+.slot div {
+    position: relative;
+    min-width: 2rem;
+    min-height: 2rem;
+    border-radius: 1rem;
+    top: -400px;
+    transition: transform 0.5s;
+}

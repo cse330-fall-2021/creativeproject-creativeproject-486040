@@ -1,0 +1,40 @@
+.game {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.App{
+  text-align: center;
+}
+#header{
+  font-size: 2.2rem;
+  font-weight: bold;
+  color:#5689db;
+  margin-top: 6rem;
+}
+.log:hover {
+  background-color: rgb(200, 231, 241);
+  border: 2px solid #5689db;
+  cursor: pointer;
+} 
+.log {
+  background-color: #ffffff;
+  border: 1px solid #5689db;
+  border-radius: 1rem;
+  color: #5689db;
+  font-size: 1rem;
+  padding: .5rem;
+  margin: 1rem .5rem;
+  width: 9rem;
+} 
+.accountInput{
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 1rem;
+  border: 1px solid rgb(129, 129, 129);
+  margin:.4rem;
+  height:1.5rem;
+  text-align: center;
+}
+.accountInput:hover{
+  background-color: rgb(228, 245, 252);
+}

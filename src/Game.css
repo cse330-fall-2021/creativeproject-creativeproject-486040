@@ -1,0 +1,52 @@
+.startButton {
+      background-color: #ffffff;
+      border: 1px solid #5689db;
+      border-radius: 1rem;
+      color: #5689db;
+      font-size: 1rem;
+      padding: .5rem;
+      margin: 1rem;
+      width: 9rem;
+} 
+.startButton:hover{
+      background-color: rgb(200, 231, 241);
+      border: 2px solid #5689db;
+      cursor: pointer;
+} 
+.log:hover {
+    background-color: rgb(200, 231, 241);
+    border: 2px solid #5689db;
+    cursor: pointer;
+} 
+  .log {
+    background-color: #ffffff;
+    border: 1px solid #5689db;
+    border-radius: 1rem;
+    color: #5689db;
+    font-size: 1rem;
+    padding: .5rem;
+    margin: 1rem .5rem;
+    width: 9rem;
+} 
+.P1 {
+    background-color: #d61212;
+    transform: translateY(400px);
+} 
+.P2 {
+    background-color: #fdf900;
+    transform: translateY(400px);
+} 
+.result {
+    color: #5689db;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    display: none;
+    transition: all 2s ease-in;
+}  
+.show {
+    display: block;
+}
+.board {
+    display: flex;
+} 
