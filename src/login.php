@@ -16,7 +16,7 @@ $password = $json_obj['password'];
 
 require './database.php';
 
-$stmt = $mysqli->prepare("SELECT COUNT(*), username, password, user_id FROM users WHERE username=?");
+$stmt = $mysqli->prepare("SELECT COUNT(*), username, password, user_id, wins, bio FROM users WHERE username=?");
 if(!$stmt){
     printf("Query Prep Failed: %s\n", $mysqli->error);
     exit;
@@ -24,7 +24,7 @@ if(!$stmt){
 
 $stmt->bind_param('s', $username);
 $stmt->execute();
-$stmt->bind_result($cnt, $username, $pwd_hash, $user_id);
+$stmt->bind_result($cnt, $username, $pwd_hash, $user_id, $wins, $bio);
 $stmt->fetch();
 $stmt->close();
 
@@ -34,11 +34,15 @@ if ($cnt == 1 && password_verify($password, $pwd_hash)){
 	session_start();
 	$_SESSION['username'] = $username;
 	$_SESSION['user_id'] = $user_id;
+	$_SESSION['bio'] = $bio;
+	$_SESSION['wins'] = $wins;
 
 	echo json_encode(array(
 		"success" => true,
 		"id" => $user_id,
-		"username" => $username
+		"username" => $username,
+		"wins" => $wins,
+		"bio" => $bio
 	));
 	exit;
 }

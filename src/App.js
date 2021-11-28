@@ -10,11 +10,18 @@ class App extends Component {
       username: "",
       password: "",
       loggedIn: false,
+      profileButton: 'Open Profile',
+      showProfile: false,
+      user_id: "",
+      user_username: "",
+      user_bio: "",
+      user_wins: "",
     }
 
     this.firstCheck();
   }
 
+  //clear input fields
   clearInputs() {
     this.setState({
       username: "",
@@ -27,6 +34,17 @@ class App extends Component {
     this.setState({ loggedIn: data.success })
   }
 
+  //sets loggin state and user info
+  is_loggedin2(data) {
+    this.setState({ 
+      loggedIn: data.success, 
+      user_username: data.username,
+      user_bio: data.bio,
+      user_wins: data.wins,
+      user_id: data.id
+    })
+  }
+
   //checks for logged in or not
   firstCheck(){
     //send data to php file and wait for appropiate repsonse
@@ -36,14 +54,22 @@ class App extends Component {
         headers: { 'content-type': 'application/json' }
     })
     .then(response => response.json())
-    .then (data => this.is_loggedin(data))
+    .then (data => data.success ? this.is_loggedin2(data) : this.is_loggedin(data))
     .catch(error => console.error('Error:',error));
   }
   
 
   //function to adjust display based on login
-  applyLogin(user_id){  
-    const data2 = {'user_id': user_id};
+  applyLogin(oldData){  
+    const data2 = {'user_id': oldData.id};
+    this.setState({
+      user_username: oldData.username,
+      user_bio: oldData.bio,
+      user_wins: oldData.wins,
+      user_id: oldData.id,
+      showProfile: false,
+      profileButton: 'Open Profile',
+    })
     //send data to php file and wait for appropiate repsonse
     fetch("./logged_in2.php", {
         method: 'POST',
@@ -118,7 +144,7 @@ class App extends Component {
         })
     .then(response => response.json())
     .then(data => {if (data.success === true) {
-              this.applyLogin(data.id);
+              this.applyLogin(data);
              alert("Logged in!");
          } else {
              alert("Incorrect Information");
@@ -141,9 +167,61 @@ class App extends Component {
     .catch(error => console.error('Error:',error));
  }
 
+  //detemrnies wether to show profile or not
+  profile(){
+    if(this.state.showProfile){
+      this.setState({
+        showProfile: false,
+        profileButton: "Open Profile",
+      })
+    } else {
+      this.setState({
+        showProfile: true,
+        profileButton: "Close Profile",
+      })
+    }
+  }
+
+  //changes the bio of user on click
+  changeBio(){
+    const data = {
+      'bio': this.state.user_bio,
+      'id': this.state.user_id
+    };
+    console.log(data);
+    //send data to php file and wait for appropiate repsonse
+    fetch("./changeBio.php", {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'content-type': 'application/json' }
+    })
+
+    .then(response => response.json())
+    .then(data => alert(data.success ? `Bio Saved` : `Error: ${data.message}`))
+    .catch(error => console.error('Error:',error));
+  }
+
+
   render() {
+    const currBio = this.state.user_bio;
     return (
       <div className="App">
+        <div>
+          {this.state.loggedIn &&
+            <div id="profile">
+              <button className='log' onClick={() => this.profile()}>{this.state.profileButton}</button>
+              {this.state.showProfile &&
+                <div id='profileInfo'>
+                  <h3>{this.state.user_username}</h3>
+                  <p>{currBio}</p>
+                  <div className="bold">Wins: {this.state.user_wins} (from last login)</div>
+                  <textarea value={this.state.user_bio} onChange={e => this.setState({ user_bio: e.target.value })}></textarea>
+                  <button className='log' onClick={() => this.changeBio()}>Change Bio</button>
+                </div>
+              }
+            </div>
+          }
+        </div>
         <div id="header">Connect 4</div>
         <div className="game">
           {this.state.loggedIn &&

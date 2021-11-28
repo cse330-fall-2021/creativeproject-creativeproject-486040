@@ -81,6 +81,9 @@ class Game extends Component {
         this.setState({
             winner: winner
         });
+        if(winner === "P1 won"){
+          this.addWin();
+        }
       //if playing against ai, make ai move
       } else {
          if(this.state.mode === 'pvai' && this.state.turn === 'P2') {
@@ -88,6 +91,18 @@ class Game extends Component {
             this.checkWin(col);
          }
       }
+    }
+
+    //adds a win to the user's win count
+    addWin(){
+      fetch("./addWin.php", {
+        method: 'POST',
+        body: JSON.stringify(),
+        headers: { 'content-type': 'application/json' }
+      })
+      .then(response => response.json())
+      .then (data => data.success && alert("Win Recorded"))
+      .catch(error => console.error('Error:',error));
     }
 
     //get an empty spot on the board for the ai to play

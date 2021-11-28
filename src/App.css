@@ -38,3 +38,41 @@
 .accountInput:hover{
   background-color: rgb(228, 245, 252);
 }
+#profile{
+  position: fixed;
+  top:13%;
+  left: 5%;
+  height: 65%;
+  width:25%;
+}
+#profileInfo{
+  height:65%;
+  border-radius: 1.5rem;
+  padding: 0 1rem;
+  padding-bottom: 1.5rem;
+  border: 2px solid white;
+  overflow-y: scroll;
+  background-color: rgb(228, 245, 252);
+  color: #3d7bdf;
+  animation: fadeIn linear .5s;
+
+}
+.bold{
+  font-weight: bold;
+}
+textarea{
+  margin-top: 8rem;
+  width:95%;
+  height: 5rem;
+  border-radius: .5rem;
+  padding: .4rem;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
