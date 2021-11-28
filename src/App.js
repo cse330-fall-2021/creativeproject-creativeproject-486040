@@ -214,7 +214,7 @@ class App extends Component {
                 <div id='profileInfo'>
                   <h3>{this.state.user_username}</h3>
                   <p>{currBio}</p>
-                  <div className="bold">Wins: {this.state.user_wins} (from last login)</div>
+                  <div className="bold">Wins from last Login: {this.state.user_wins}</div>
                   <textarea value={this.state.user_bio} onChange={e => this.setState({ user_bio: e.target.value })}></textarea>
                   <button className='log' onClick={() => this.changeBio()}>Change Bio</button>
                 </div>
