@@ -29,11 +29,27 @@
     width: 9rem;
 } 
 .P1 {
-    background-color: #d61212;
     transform: translateY(400px);
+}
+.Red{
+    background-color: #d61212;
+}
+.Yellow{
+    background-color: #fdf900;
+}
+.Orange {
+    background-color: #e68b03;
+}
+.Blue{
+    background-color: #0261ce;
+} 
+.Green{
+    background-color: #07852d;
+} 
+.Purple{
+    background-color: #741eff;
 } 
 .P2 {
-    background-color: #fdf900;
     transform: translateY(400px);
 } 
 .result {
@@ -50,3 +66,15 @@
 .board {
     display: flex;
 } 
+.color {
+    margin: 0 .3rem 0 1rem;
+    color: #5689db;
+    font-weight: bold;
+}
+select{
+    width: 6rem;
+    padding: 0 .4rem;
+    height: 1.6rem;
+    cursor: pointer;
+    border-radius: 1rem;
+}

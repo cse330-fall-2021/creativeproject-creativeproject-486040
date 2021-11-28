@@ -13,6 +13,8 @@ class Game extends Component {
         turn: 'P1',
         winner: '',
         draw: false,
+        p1Color: 'Red',
+        p2Color: 'Blue',
       }
     }
   
@@ -153,7 +155,7 @@ class Game extends Component {
       //instantiate columns of board so may be clicked on
       let cols = [];
       for(let i = 0; i < this.state.board.length; i++) {
-          cols[i] = <Col key={i} slots={this.state.board[i]} checkWin={() => this.checkWin(i)}></Col>
+          cols[i] = <Col key={i} p1Color={this.state.p1Color} p2Color={this.state.p2Color} slots={this.state.board[i]} checkWin={() => this.checkWin(i)}></Col>
       }
   
       return (
@@ -172,6 +174,20 @@ class Game extends Component {
                         <div>
                             <button className='startButton' onClick={() => this.startGame('pvp')}>P vs P</button>
                             <button className='startButton' onClick={() => this.startGame('pvai')}>P vs AI</button>
+                        </div>
+                        <div>
+                          <label className="color">P1 Color: </label>
+                          <select name="p1Color" id="p1Color" value={this.state.p1Color} onChange={e => this.setState({ p1Color: e.target.value })}>
+                            <option value="Red">Red</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Yellow">Yellow</option>
+                          </select> 
+                          <label className="color">P2 Color: </label>
+                          <select name="p2Color" id="p2Color" value={this.state.p2Color} onChange={e => this.setState({ p2Color: e.target.value })}>
+                            <option value="Blue">Blue</option>
+                            <option value="Green">Green</option>
+                            <option value="Purple">Purple</option>
+                          </select> 
                         </div>
                     </div>
                 }
