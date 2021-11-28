@@ -9,8 +9,17 @@ class App extends Component {
     this.state = {
       username: "",
       password: "",
-      loggedIn: true,
+      loggedIn: false,
     }
+
+    this.firstCheck();
+  }
+
+  clearInputs() {
+    this.setState({
+      username: "",
+      password: "",
+    })
   }
 
   //sets loggin state
@@ -20,7 +29,8 @@ class App extends Component {
 
   //checks for logged in or not
   firstCheck(){
-    fetch("http://10.0.2.2/src/logged_in.php", {
+    //send data to php file and wait for appropiate repsonse
+    fetch("./logged_in.php", {
         method: 'POST',
         body: JSON.stringify(),
         headers: { 'content-type': 'application/json' }
@@ -29,12 +39,13 @@ class App extends Component {
     .then (data => this.is_loggedin(data))
     .catch(error => console.error('Error:',error));
   }
+  
 
   //function to adjust display based on login
   applyLogin(user_id){  
     const data2 = {'user_id': user_id};
-
-    fetch("http://10.0.2.2/src/logged_in2.php", {
+    //send data to php file and wait for appropiate repsonse
+    fetch("./logged_in2.php", {
         method: 'POST',
         body: JSON.stringify(data2),
         headers: { 'content-type': 'application/json' }
@@ -46,23 +57,50 @@ class App extends Component {
     this.firstCheck();
   }
 
+  //check if username exists before register
+  findUser() {
+    if(this.state.username && this.state.password) {
+      // Make a URL-encoded string for passing POST data:
+      const data = {
+          'username': this.state.username,
+      };
+      //send data to php file and wait for appropiate repsonse
+      fetch("./findUser.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'content-type': 'application/json' }
+      })
+
+      .then(response => response.json())
+      .then(data => !data.id ? this.register() : this.taken())
+      .catch(error => console.error('Error:',error));
+    }
+  }
+
+  //alert for taken username
+  taken() {
+    alert(`Username taken`);
+    this.clearInputs();
+  }
+
   //register
   register() {
-    // Make a URL-encoded string for passing POST data:
     const data = {
-        'username': this.state.username,
-        'password': this.state.password,
+      'username': this.state.username,
+      'password': this.state.password,
     };
+    //send data to php file and wait for appropiate repsonse
+    fetch("./register.php", {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'content-type': 'application/json' }
+    })
 
-    fetch("http://10.0.2.2/src/register.php", {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'content-type': 'application/json' }
-        })
+    .then(response => response.json())
+    .then(data => alert(data.success ? `You have been registered as ${data.user}` : `Error: ${data.message}`))
+    .catch(error => console.error('Error:',error));
 
-        .then(response => response.json())
-        .then(data => alert(data.success ? `You have been registered as ${data.user}` : `Error: ${data.message}`))
-        .catch(error => console.error('Error:',error));
+    this.clearInputs();
   }
 
   //login
@@ -72,7 +110,8 @@ class App extends Component {
       'password': this.state.password, 
     };
 
-    fetch("http://10.0.2.2/src/login.php'", {
+    //send data to php file and wait for appropiate repsonse
+    fetch("./login.php", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'content-type': 'application/json' }
@@ -80,9 +119,10 @@ class App extends Component {
     .then(response => response.json())
     .then(data => {if (data.success === true) {
               this.applyLogin(data.id);
-             alert("You have logged in");
+             alert("Logged in!");
          } else {
-             alert("You have not logged in");
+             alert("Incorrect Information");
+             this.clearInputs();
          }})
     .catch(err => console.error(err));
   }
@@ -90,7 +130,7 @@ class App extends Component {
   //logout
   logout() {
     //send data to php file and wait for appropiate repsonse
-    fetch("http://10.0.2.2/src/logout.php", {
+    fetch("./logout.php", {
             method: 'POST',
             body: JSON.stringify(),
             headers: { 'content-type': 'application/json' }
@@ -117,14 +157,14 @@ class App extends Component {
           {!this.state.loggedIn &&
             <div>
               <div>
-                <input className="accountInput" type="text" name="username" id="username" placeholder="Username" onChange={e => this.setState({ username: e.target.value })}/>
+                <input className="accountInput" type="text" name="username" id="username" placeholder="Username" value={this.state.username} onChange={e => this.setState({ username: e.target.value })}/>
               </div>
               <div>
-                <input className="accountInput" type="password" name="password" id="password" placeholder="Password" onChange={e => this.setState({ password: e.target.value })}/>
+                <input className="accountInput" type="password" name="password" id="password" placeholder="Password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })}/>
               </div>
               <div>
                 <button className='log' onClick={() => this.login()}>Log In</button>
-                <button className='log' onClick={() => this.register()}>Register</button>
+                <button className='log' onClick={() => this.findUser()}>Register</button>
               </div>
             </div>
           }

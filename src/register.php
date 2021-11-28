@@ -12,7 +12,7 @@
         $pwd = $json_obj['password'];
                 
         //load database
-        require 'http://10.0.2.2/src/database.php';
+        require './database.php';
 
         $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
         $stmt = $mysqli->prepare("INSERT into users (username, password) values (?, ?)");

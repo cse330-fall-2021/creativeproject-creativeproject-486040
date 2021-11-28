@@ -14,7 +14,7 @@ $username = $json_obj['username'];
 $password = $json_obj['password'];
 // Check to see if the username and password are valid.  (You learned how to do this in Module 3.)
 
-require 'database.php';
+require './database.php';
 
 $stmt = $mysqli->prepare("SELECT COUNT(*), username, password, user_id FROM users WHERE username=?");
 if(!$stmt){

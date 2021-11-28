@@ -1,6 +1,6 @@
 {
   "name": "creativeproject-creativeproject-486040",
-  "homepage": "http://ec2-18-224-27-24.us-east-2.compute.amazonaws.com/ec2-user/creative",
+  "homepage": "http://ec2-18-224-27-24.us-east-2.compute.amazonaws.com/~ec2-user/creative",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
