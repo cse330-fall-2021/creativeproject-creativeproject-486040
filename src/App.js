@@ -252,6 +252,7 @@ class App extends Component {
     })
   }
 
+  //returns leaderboard info
   getInput() {
     return this.state.leaderboard;
   }
