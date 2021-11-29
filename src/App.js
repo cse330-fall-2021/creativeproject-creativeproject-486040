@@ -72,6 +72,8 @@ class App extends Component {
       user_id: oldData.id,
       showProfile: false,
       profileButton: 'Open Profile',
+      showLead: false,
+      leadButton: "Open Leaderboard",
     })
     //send data to php file and wait for appropiate repsonse
     fetch("./logged_in2.php", {
