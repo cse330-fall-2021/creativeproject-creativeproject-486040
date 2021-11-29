@@ -34,3 +34,12 @@ Baaj Arora 486040 baajarora
 
 
 Approved by Clay
+
+
+
+
+
+
+For my creative portion, I added the ability to change the color of the game discs. Player 1 may choose from the set of warm colors and player 2 may choose from the set of cool colors. I also added the ability to track wins. When plaeyr 1 wins in a game, that win is recorded in the database under the signed-in user. I also added a profile for each user. This may be viewed by clicking the open profile button. Here one may view their username and wins, along with a bio that can be edited within the same popup. Along with the profile popup, I also added a leaderboard popup which may be viewed by clicking open leaderbaord. Here, all registered users are displayed with their current wins in descending order. 
+
+To use the site, register with a new account and log in to the site. There you can access the logout button along with parts of the creative portion such as profile, leaderboard, and color-change. Along with that, you can play Connect 4 either against another player or ai by clicking on either button. You then may play the game by cliking on the row you wish to add a disc to. The game will end either in a win or draw, and then you may play again.
