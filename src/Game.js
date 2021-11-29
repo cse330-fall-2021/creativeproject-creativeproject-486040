@@ -76,12 +76,12 @@ class Game extends Component {
     //after update render
     componentDidUpdate(){
       //check for winner
-      let winner = this.isWin(this.state.board);
-      if(this.state.winner !== winner){
+      let currWinner = this.isWin(this.state.board);
+      if(this.state.winner !== currWinner){
         this.setState({
-            winner: winner
+            winner: currWinner
         });
-        if(winner === "P1 won"){
+        if(currWinner === "P1 won"){
           this.addWin();
         }
       //if playing against ai, make ai move
@@ -122,7 +122,7 @@ class Game extends Component {
     
     //check all possible 4-in-a-row's on the board
     isWin(board) {
-        //check verticles
+        //check verticals
         for (let c = 0; c < 7; c++) {
             for (let r = 0; r < 4; r++) {
                 if (this.isWinHelper(board[c][r], board[c][r+1], board[c][r+2], board[c][r+3])) {
