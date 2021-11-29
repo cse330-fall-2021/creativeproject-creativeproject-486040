@@ -9,13 +9,16 @@ class App extends Component {
     this.state = {
       username: "",
       password: "",
-      loggedIn: false,
+      loggedIn: true,
       profileButton: 'Open Profile',
       showProfile: false,
+      leadButton: 'Open Leaderboard',
+      showLead: false,
       user_id: "",
       user_username: "",
       user_bio: "",
       user_wins: "",
+      leaderboard: "",
     }
 
     this.firstCheck();
@@ -175,11 +178,80 @@ class App extends Component {
         profileButton: "Open Profile",
       })
     } else {
+      this.getWins();
       this.setState({
         showProfile: true,
         profileButton: "Close Profile",
       })
     }
+  }
+
+  //gets player wins from sql
+  getWins() {
+    fetch("getWins.php", {
+      method: 'POST',
+      body: JSON.stringify(),
+      headers: { 'content-type': 'application/json' }
+    })
+
+    .then(response => response.json())
+    .then(data => data.success && this.updateWins(data))
+    .catch(error => console.error('Error:',error))
+  }
+
+  //updates the current win data
+  updateWins(data) {
+    this.setState({
+      user_wins: data.wins
+    })
+  }
+
+  //detemrnies wether to show leaderboard or not
+  leaderboard(){
+    if(this.state.showLead){
+      this.setState({
+        showLead: false,
+        leadButton: "Open Leaderboard",
+      })
+    } else {
+      this.getLeaderboard();
+      this.setState({
+        showLead: true,
+        leadButton: "Close Leaderboard",
+      })
+    }
+  }
+
+  //function to retrieve leaderboard from sql
+  getLeaderboard(){
+
+    fetch("getLeaderboard.php", {
+      method: 'POST',
+      body: JSON.stringify(),
+      headers: { 'content-type': 'application/json' }
+    })
+
+    .then(response => response.json())
+    .then(data => data.success ? this.insertLeaderboard(data) : alert(`Error: ${data.message}`))
+    .catch(error => console.error('Error:',error))
+  }
+
+  //put leaderboard in display
+  insertLeaderboard(data) {
+    let usernames = data.usernames;
+		let winss = data.winss;
+    let input = "";
+
+		for (let i = 0; i < usernames.length; i++) {
+      input += "<div class='width100'><div class='luser'>"+usernames[i]+"</div><div class='lwins'>"+winss[i]+"</div></div><br>";
+		}
+    this.setState({
+      leaderboard: input
+    })
+  }
+
+  getInput() {
+    return this.state.leaderboard;
   }
 
   //changes the bio of user on click
@@ -208,17 +280,33 @@ class App extends Component {
       <div className="App">
         <div>
           {this.state.loggedIn &&
-            <div id="profile">
-              <button className='log' onClick={() => this.profile()}>{this.state.profileButton}</button>
-              {this.state.showProfile &&
-                <div id='profileInfo'>
-                  <h3>{this.state.user_username}</h3>
-                  <p>{currBio}</p>
-                  <div className="bold">Wins from last Login: {this.state.user_wins}</div>
-                  <textarea value={this.state.user_bio} onChange={e => this.setState({ user_bio: e.target.value })}></textarea>
-                  <button className='log' onClick={() => this.changeBio()}>Change Bio</button>
-                </div>
-              }
+            <div>
+              <div id="profile">
+                <button className='log' onClick={() => this.profile()}>{this.state.profileButton}</button>
+                {this.state.showProfile &&
+                  <div id='profileInfo'>
+                    <h3>{this.state.user_username}</h3>
+                    <p>{currBio}</p>
+                    <div className="bold">Wins: {this.state.user_wins}</div>
+                    <textarea value={this.state.user_bio} placeholder="Add Bio Here" onChange={e => this.setState({ user_bio: e.target.value })}></textarea>
+                    <button className='log' onClick={() => this.changeBio()}>Change Bio</button>
+                  </div>
+                }
+              </div>
+              <div id="leaderboard">
+                <button className='log log2' onClick={() => this.leaderboard()}>{this.state.leadButton}</button>
+                {this.state.showLead &&
+                  <div id='leaderboardInfo'>
+                    <h3>Leaderboard</h3>
+                    <div id='leaderboardUsers'>
+                      <div className='width100'>
+                        <div className='luserTitle'>Username</div><div className='lwinsTitle'>Wins</div>
+                      </div><br></br>
+                      <div dangerouslySetInnerHTML={{ __html: this.getInput() }}></div>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
           }
         </div>
@@ -235,7 +323,7 @@ class App extends Component {
           {!this.state.loggedIn &&
             <div>
               <div>
-                <input className="accountInput" type="text" name="username" id="username" placeholder="Username" value={this.state.username} onChange={e => this.setState({ username: e.target.value })}/>
+                <input className="accountInput" type="text" name="username" id="username" placeholder="Username" maxLength="15" value={this.state.username} onChange={e => this.setState({ username: e.target.value })}/>
               </div>
               <div>
                 <input className="accountInput" type="password" name="password" id="password" placeholder="Password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })}/>

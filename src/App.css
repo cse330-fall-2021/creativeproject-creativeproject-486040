@@ -27,6 +27,9 @@
   margin: 1rem .5rem;
   width: 9rem;
 } 
+.log2{
+  width:10rem !important;
+}
 .accountInput{
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   border-radius: 1rem;
@@ -55,7 +58,26 @@
   background-color: rgb(228, 245, 252);
   color: #3d7bdf;
   animation: fadeIn linear .5s;
+}
+#leaderboard{
+  position: fixed;
+  top:13%;
+  right: 5%;
+  height: 65%;
+  width:25%;
 
+}
+#leaderboardInfo{
+  height:65%;
+  border-radius: 1.5rem;
+  padding: 0 1rem;
+  padding-bottom: 1.5rem;
+  border: 2px solid white;
+  overflow-y: scroll;
+  background-color: rgb(228, 245, 252);
+  color: #3d7bdf;
+  animation: fadeIn linear .5s;
+  overflow: hidden;
 }
 .bold{
   font-weight: bold;
@@ -66,6 +88,29 @@ textarea{
   height: 5rem;
   border-radius: .5rem;
   padding: .4rem;
+}
+.luser{
+  float: left;
+}
+.lwins{
+  float: right;
+}
+.luserTitle{
+  float: left;
+  font-weight: bold;
+}
+.lwinsTitle{
+  float: right;
+  font-weight: bold;
+}
+.width100{
+  width:100%;
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+}
+#leaderboardUsers{
+  height: 83%;
+  overflow: scroll !important;
 }
 
 @keyframes fadeIn {

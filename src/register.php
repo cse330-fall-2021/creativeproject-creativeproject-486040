@@ -10,17 +10,18 @@
         //Variables can be accessed as such:
         $new_user = $json_obj['username'];
         $pwd = $json_obj['password'];
+        $wins=0;
                 
         //load database
         require './database.php';
 
         $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
-        $stmt = $mysqli->prepare("INSERT into users (username, password) values (?, ?)");
+        $stmt = $mysqli->prepare("INSERT into users (username, password, wins) values (?, ?, ?)");
         if(!$stmt){
                 printf("Query Prep Failed: %s\n", $mysqli->error);
                 exit;
         }
-        $stmt->bind_param('ss', $new_user, $pwd_hash);
+        $stmt->bind_param('ssi', $new_user, $pwd_hash, $wins);
         $stmt->execute();
         $stmt->close();
         echo json_encode(array(
