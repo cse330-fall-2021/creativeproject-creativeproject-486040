@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       username: "",
       password: "",
-      loggedIn: true,
+      loggedIn: false,
       profileButton: 'Open Profile',
       showProfile: false,
       leadButton: 'Open Leaderboard',
